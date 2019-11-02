@@ -6,12 +6,12 @@ Design
 Users open a web page and can connect by giving their username and pressing a button.
 As soon as at least 2 users have connected, a quiz can be started (by any user? by the first user?).
 
-The screen should like:
+The screen should like this:
 
-| 3 * 4 = ?
-| (spinner)
+| 3 * 4 = ? |
+| (spinner) |
 | 8 | 10 | 12 | 14 | 16 |
-| Answers
+| Answers |
 | ####-------- |
 
 Question can be
