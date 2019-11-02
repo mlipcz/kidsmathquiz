@@ -1,5 +1,5 @@
 # kidsmathquiz
-Web application for simple timed quizzes for concurrent user
+Web application for simple timed quizzes for concurrent users
 
 Technologies:
 * Java 8
