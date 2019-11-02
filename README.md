@@ -16,7 +16,7 @@ The screen should like this:
 
 Question can be
 * Randomly generated as sums or products within a certain range, i.e. up to 30
-* Custom defined, e.g. what's the capital of Switzerland?
+* Custom defined, e.g. what's the capital city of Switzerland?
 
 An answer has to be given within 5 seconds (settable). A timeout is a bad answer.
 Option: only the fastest user gets a point (or an extra point).
