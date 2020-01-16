@@ -10,7 +10,7 @@ The screen should like this:
 
 | 3 * 4 = ? |
 | --------- |
-| (sandclock) |
+| (hourglass) |
 | 8 ¦ 10 ¦ 12 ¦ 14 ¦ 16 |
 | Answers |
 | ####-------- |
