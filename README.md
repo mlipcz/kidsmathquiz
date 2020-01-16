@@ -10,8 +10,8 @@ The screen should like this:
 
 | 3 * 4 = ? |
 | --------- |
-| (spinner) |
-| 8 | 10 | 12 | 14 | 16 |
+| (sandclock) |
+| 8 ¦ 10 ¦ 12 ¦ 14 ¦ 16 |
 | Answers |
 | ####-------- |
 
