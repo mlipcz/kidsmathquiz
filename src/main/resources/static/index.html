@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kids Math Quiz</title>
+    <meta charset="UTF-8">
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/main.css" rel="stylesheet">
+    <script src="/webjars/jquery/3.1.0/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="/app.js"></script>
+</head>
+<body>
+<div id="main-content" class="container" style="width:350px">
+    <div class="row" style="background-color: #283e4a;">
+        <div class="col-md-12">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="shortName" style="color: white">Dołącz do gry</label>
+                    <input type="text" id="shortName" class="form-control" placeholder="Podaj imię"/>
+                    <button id="connect" class="btn btn-default" type="submit">Dołącz</button>
+                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">Opuść</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row" style="border-top: solid 5px #0073b1;">
+        <div class="col-xs-4">
+            <h3>Gracze</h3>
+            <table id="memberslog" class="table" style="border: solid 1px #999999">
+                <thead id="membersList">
+                </thead>
+                <tbody id="membersChat">
+                </tbody>
+            </table>
+            <div id="frequentUsers">
+                <form>
+                <button id="frequentUser1" class="btn btn-default" type="submit">Klara</button>
+                <button id="frequentUser2" class="btn btn-default" type="submit">Lila</button>
+                </form>
+            </div>
+            <div id="errorMessages" style="color: red;">
+            </div>
+        </div>
+    </div>
+    <div class="row" style="background-color: #283e4a;">
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="message" style="color: white">Send a Message</label>
+                    <input type="text" id="message" class="form-control" placeholder="Your message here...">
+                </div>
+                <button id="send" class="btn btn-default" type="submit">Send</button>
+            </form>
+        </div>
+        <div class="col-md-2">
+            <form class="form-inline">
+            <button id="sendSpecialMessage" class="btn btn-primary disabled" type="submit">Start</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="game" class="container" style="display:none; width:350px">
+    <div class="jumbotron text-center col-md-6" style="background-color: #aaccee;">
+        <h1 id="question">3 &times; 4</h1>
+    </div>
+    <div id="progressbar0" class="col-md-6">
+        <div id="progressbar" style="width: 100%; height: 30px; background: yellow; "></div>
+    </div>
+    <br clear="both"/>
+    <div id="completed" class="col-md-6" style="display: table;">
+    </div>
+    <br clear="both"/>
+    <div class="text-center col-md-6" style="background-color: #66ccee;">
+        <form>
+        <button id="answer0" class="btn btn-default" type="submit">8</button>
+        <button id="answer1" class="btn btn-default" type="submit">10</button>
+        <button id="answer2" class="btn btn-default" type="submit">12</button>
+        <button id="answer3" class="btn btn-default" type="submit">14</button>
+        <button id="answer4" class="btn btn-default" type="submit">16</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

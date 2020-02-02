@@ -1,0 +1,31 @@
+body {
+    background-color: #88bbff;
+}
+
+#main-content {
+    max-width: 940px;
+    padding: 2em 3em;
+    margin: 0 auto 20px;
+    background-color: #bdf;
+    border: 1px solid #99bbee;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.box {
+    width:30px;
+    height:30px;
+    border-style:solid;
+    border-color:black;
+    border-width: 1px;
+    display: table-cell;
+}
+
+.box-good{
+    background:green;
+}
+
+.box-wrong{
+    background:red;
+}
