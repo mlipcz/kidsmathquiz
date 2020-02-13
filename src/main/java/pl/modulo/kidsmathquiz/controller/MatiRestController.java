@@ -14,11 +14,11 @@ public class MatiRestController {
     @Autowired
     MatiRepository repository;
 
-    @GetMapping(value = "/rest/users", produces = MediaType.TEXT_PLAIN_VALUE)
+    @GetMapping(value = "/rest/users", produces = MediaType.APPLICATION_JSON_VALUE)
     public String getUsers() {
-        JSONObject o = new JSONObject();
-        o.put("users", repository.getUsers());
-        return o.toString();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("users", repository.getUsers());
+        return jsonObject.toString();
     }
 
 }

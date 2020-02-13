@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.util.HtmlUtils;
 import pl.modulo.kidsmathquiz.MatiRepository;
 import pl.modulo.kidsmathquiz.QuestionAnswerTimerTask;
+import pl.modulo.kidsmathquiz.config.AppConfig;
 import pl.modulo.kidsmathquiz.model.MessageIn;
 import pl.modulo.kidsmathquiz.model.MessageOut;
-import pl.modulo.kidsmathquiz.strategy.QuestionAnswersProvider;
+import pl.modulo.kidsmathquiz.model.MessageOutOneRecipient;
+import pl.modulo.kidsmathquiz.model.QuestionAnswersMessageOut;
 
-import javax.annotation.Resource;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -27,10 +29,9 @@ public class QuizController {
     @Autowired
     SimpMessagingTemplate messagingTemplate;
 
-    @Resource
-    QuestionAnswersProvider questionAnswersProvider;
+    @Autowired
+    AppConfig appConfig;
 
-    private final int PERIOD = 5000; // in ms
     private final Timer timer = new Timer(true);
 
     private QuestionAnswerTimerTask timerTask;
@@ -38,21 +39,22 @@ public class QuizController {
     private Map<String, Integer> scores = new HashMap<>();
 
     @MessageMapping("/chat")
-    @SendTo("/topic/chats")
-    public MessageOut handleChat(MessageIn msg) {
+    public void handleChat(MessageIn msg /*, Principal principal*/) {
         String message = msg.getMessage();
-        System.out.println(message+"/"+msg.getSenderName());
-        if ("Start".equals(message)) {
-            if (timerTask != null)
-                timerTask.cancel();
-            timerTask = new QuestionAnswerTimerTask(messagingTemplate, questionAnswersProvider);
-            timer.scheduleAtFixedRate(timerTask, 0, PERIOD);
-        } else if (isNumber(message)) {
+        System.out.println(message+"/"+msg.getSenderName()); // +"/"+principal.getName()
+        if (isNumber(message)) {
             boolean ok = timerTask.isAnswerCorrect(msg.getMessage());
             scores.put(msg.getSenderName(), scores.getOrDefault(msg.getSenderName(), 0) + (ok ? 0 : 1));
-            return new MessageOut(ok ? "GOOD" : "WRONG");
+            messagingTemplate.convertAndSend("/topic/answer-rating-"+msg.getSenderName(), new MessageOutOneRecipient(ok ? "GOOD" : "WRONG", msg.getSenderName()));
+        } else {
+            if ("Start".equals(message)) {
+                if (timerTask != null)
+                    timerTask.cancel();
+                timerTask = new QuestionAnswerTimerTask(messagingTemplate, appConfig.getQuestionAnswersProvider());
+                timer.scheduleAtFixedRate(timerTask, 0, appConfig.getAnswerTimeout());
+            }
+            messagingTemplate.convertAndSend("/topic/chats", new MessageOut(HtmlUtils.htmlEscape(message)));
         }
-        return new MessageOut(HtmlUtils.htmlEscape(message));
     }
 
     private boolean isNumber(String s) {
@@ -61,16 +63,16 @@ public class QuizController {
 
     @MessageMapping("/join")
     @SendTo("/topic/names")
-    public MessageOut handleJoin(MessageIn name) {
-        repository.addUser(name.getSenderName());
-        return new MessageOut("przyszła: "+name.getMessage());
+    public MessageOut handleJoin(MessageIn msg) {
+        repository.addUser(msg.getSenderName());
+        return new MessageOut("przyszła: "+msg.getSenderName());
     }
 
     @MessageMapping("/left")
     @SendTo("/topic/left")
     public MessageOut handleLeft(MessageIn msg) {
         repository.deleteUser(msg.getSenderName());
-        return new MessageOut("odeszła: "+msg.getMessage());
+        return new MessageOut("odeszła: "+msg.getSenderName());
     }
 
     @MessageExceptionHandler

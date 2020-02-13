@@ -12,4 +12,13 @@ public class AppConfig {
         //return new MidMulti();
         return new MidSum();
     }
+
+    public int getAnswerTimeout() {
+        return 7000;
+    }
+
+    public int getQuestionCount() {
+        return 7000;
+    }
+
 }

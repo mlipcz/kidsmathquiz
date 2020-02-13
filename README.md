@@ -33,3 +33,8 @@ Technologies:
 
 The main target is to improve skills in developing realtime web applications.
 
+To do:
+1. Sent message about answer quality only to its user
+2. Failure on answer timeout
+3. Responsive layout - good on mobile phone, tablet, computer
+4. Message "game over" 

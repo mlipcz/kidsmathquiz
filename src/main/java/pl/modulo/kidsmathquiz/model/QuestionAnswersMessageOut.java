@@ -2,11 +2,11 @@ package pl.modulo.kidsmathquiz.model;
 
 import java.util.List;
 
-public class RichMessageOut {
+public class QuestionAnswersMessageOut {
     private String question;
     private List<String> answers;
 
-    public RichMessageOut(String question, List<String> answers) {
+    public QuestionAnswersMessageOut(String question, List<String> answers) {
         this.question = question;
         this.answers = answers;
     }

@@ -20,7 +20,7 @@ public abstract class Multi implements QuestionAnswersProvider {
         QuestionAnswers qa = new QuestionAnswers();
         qa.setAnswers(answers.stream().map(String::valueOf).collect(Collectors.toList()));
         qa.setQuestion(x + " &times; " + y);
-        qa.setCorrectAnswer(""+x*y);
+        qa.setCorrectAnswer("" + x * y);
         return qa;
     }
 

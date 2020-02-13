@@ -1,7 +1,7 @@
 package pl.modulo.kidsmathquiz;
 
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import pl.modulo.kidsmathquiz.model.RichMessageOut;
+import pl.modulo.kidsmathquiz.model.QuestionAnswersMessageOut;
 import pl.modulo.kidsmathquiz.strategy.QuestionAnswers;
 import pl.modulo.kidsmathquiz.strategy.QuestionAnswersProvider;
 
@@ -24,7 +24,7 @@ public class QuestionAnswerTimerTask extends TimerTask {
     @Override
     public void run() {
         qa = questionAnswersProvider.giveQuestionAnswers(ANSWERS_COUNT);
-        messagingTemplate.convertAndSend("/topic/questions", new RichMessageOut(qa.getQuestion(), qa.getAnswers()));
+        messagingTemplate.convertAndSend("/topic/questions", new QuestionAnswersMessageOut(qa.getQuestion(), qa.getAnswers()));
         if (--this.counter == 0)
             this.cancel();
     }
