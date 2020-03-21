@@ -10,7 +10,7 @@ The screen should like this:
 
 | 3 * 4 = ? |
 | --------- |
-| (hourglass) |
+| (progress bar) |
 | 8 ¦ 10 ¦ 12 ¦ 14 ¦ 16 |
 | Answers |
 | ####-------- |
@@ -21,7 +21,7 @@ Question can be
 
 An answer has to be given within 5 seconds (settable). A timeout is a bad answer.
 Option: only the fastest user gets a point (or an extra point).
-The quiz is over after 20 questions (settable).
+The quiz is over after 5 questions (settable).
 
 Technologies:
 * Java 8
@@ -34,7 +34,5 @@ Technologies:
 The main target is to improve skills in developing realtime web applications.
 
 To do:
-1. Sent message about answer quality only to its user
-2. Failure on answer timeout
-3. Responsive layout - good on mobile phone, tablet, computer
-4. Message "game over" 
+1. Responsive layout - good on mobile phone, tablet, computer
+2. Message "game over" 

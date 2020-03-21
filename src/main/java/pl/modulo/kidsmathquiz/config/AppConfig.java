@@ -7,18 +7,22 @@ import pl.modulo.kidsmathquiz.strategy.QuestionAnswersProvider;
 
 @Configuration
 public class AppConfig {
-    @Bean
-    public QuestionAnswersProvider getQuestionAnswersProvider() {
-        //return new MidMulti();
-        return new MidSum();
-    }
+	@Bean
+	public QuestionAnswersProvider getQuestionAnswersProvider() {
+		//return new MidMulti();
+		return new MidSum();
+	}
 
-    public int getAnswerTimeout() {
-        return 7000;
-    }
+	public int getAnswerTimeout() {
+		return 2000;
+	}
 
-    public int getQuestionCount() {
-        return 7000;
-    }
+	public int getQuestionCount() {
+		return 3;
+	}
+
+	public int getAnswerCount() {
+		return 5;
+	}
 
 }

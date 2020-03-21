@@ -9,14 +9,6 @@ function setConnected(connected) {
     $("#shortName").prop("disabled", !connected);
     $("#frequentUser1").prop("disabled", connected);
     $("#frequentUser2").prop("disabled", connected);
-/*
-    if (connected) {
-        $("#conversation").show();
-    }
-    else {
-        $("#conversation").hide();
-    }
-    */
 }
 
 function connect() {
@@ -55,6 +47,11 @@ function connect() {
             showLeftName(JSON.parse(greeting.body).content);
         });
 
+        stompClient.subscribe("/topic/scores", function (greeting) {
+            console.log("scores: "+greeting);
+            showScores(JSON.parse(greeting.body).content);
+        });
+
         sendName();
     });
 
@@ -80,13 +77,13 @@ function showQuestion(message) {
     if (interval !== -1) {
         clearInterval(interval);
     }
-    interval = setInterval(frame, 50);
+    interval = setInterval(frame, 70);
     var width = 100;
     function frame() {
       if (width <= 0) {
         clearInterval(interval);
       } else {
-        width = width-1;
+        width--;
         $("#progressbar").css({width: width+"%"});
       }
     }
@@ -109,6 +106,7 @@ function showRating(content) {
         $("#completed").append("<div class='box box-good'></div>&nbsp;");
     } else if (content === "WRONG") {
         $("#completed").append("<div class='box box-wrong'></div>&nbsp;");
+        disableAnswers();
     }
 }
 
@@ -133,10 +131,13 @@ function sendLeftName() {
 function sendAnswer(i) {
     console.log("shortName="+shortName);
     stompClient.send("/app/chat", {}, JSON.stringify({'senderName': shortName, 'message': i}));
+    disableAnswers();
+}
+
+function disableAnswers() {
     for (i=0; i<5; i++)
         $("#answer"+i).prop("disabled", true);
 }
-
 
 function showJoinedName(message) {
     $("#membersChat").append("<tr><td>" + message + "</td></tr>");
@@ -150,6 +151,13 @@ function showLeftName(message) {
 
 function showErrors(message) {
 	$("#errorMessages").html("<tr><td>" + message + "</td></tr>");
+}
+
+function showScores(message) {
+    console.log("scores(2): "+message);
+	$("#game").hide(500);
+    $("#game-over").show(500);
+    $("#scores").html(message);
 }
 
 function loadUsers(){
