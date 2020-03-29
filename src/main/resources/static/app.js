@@ -74,9 +74,7 @@ function showQuestion(message) {
         $("#answer"+i).html(message.answers[i]);
         $("#answer"+i).prop("disabled", false);
         $("#answer"+i).blur();
-        document.getElementById("answer"+i).blur();
     }
-    document.getElementById("dummy-answer").focus();
     $("#progressbar").css({width: "100%"});
     if (interval !== -1) {
         clearInterval(interval);
