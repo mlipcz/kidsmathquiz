@@ -14,7 +14,7 @@ public class AppConfig {
 	}
 
 	public int getAnswerTimeout() {
-		return 2000;
+		return 7000;
 	}
 
 	public int getQuestionCount() {

@@ -2,6 +2,7 @@ var stompClient = null;
 var socket = null;
 var shortName = "";
 var interval = -1;
+var subscribed = false;
 
 function setConnected(connected) {
     $("#connect").prop("disabled", connected);
@@ -72,7 +73,10 @@ function showQuestion(message) {
     for (i=0; i<5; i++) {
         $("#answer"+i).html(message.answers[i]);
         $("#answer"+i).prop("disabled", false);
+        $("#answer"+i).blur();
+        document.getElementById("answer"+i).blur();
     }
+    document.getElementById("dummy-answer").focus();
     $("#progressbar").css({width: "100%"});
     if (interval !== -1) {
         clearInterval(interval);
@@ -92,12 +96,17 @@ function showQuestion(message) {
 function showMessage(message) {
     console.log("message='"+message+"'");
     if (message === "Start") {
-        stompClient.subscribe("/topic/answer-rating-"+$("#shortName").val(), function (rating) {
-            console.log("rating0:"+rating);
-            showRating(JSON.parse(rating.body).content);
-        });
+	    if (!subscribed) {
+	        subscribed = true;
+	        stompClient.subscribe("/topic/answer-rating-"+$("#shortName").val(), function (rating) {
+	            console.log("rating0:"+rating);
+	            showRating(JSON.parse(rating.body).content);
+	        });
+        }
         $("#main-content").hide(500);
-        $("#game").show(500);
+		$("#game").show(500);
+        $("#game-over").hide();
+        $("#completed").empty();
     }
 }
 
@@ -179,6 +188,7 @@ $(function () {
     $("#disconnect").click(function() { disconnect(); });
     $("#send").click(function() { sendMessage(); });
     $("#sendSpecialMessage").click(function() { sendSpecialMessage(); });
+    $("#sendSpecialMessage2").click(function() { sendSpecialMessage(); });
     $("#frequentUser1").click(function() { $("#shortName").val("Klara"); connect(); });
     $("#frequentUser2").click(function() { $("#shortName").val("Lila"); connect(); });
     for (i=0; i<5; i++)
